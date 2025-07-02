@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>To-Do List App</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      margin-top: 50px;
+      background: #ffffffcc;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 400px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #4b0082;
+    }
+
+    input[type="text"], input[type="datetime-local"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #6a0dad;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #530a8d;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    li {
+      background-color: #fff;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s;
+    }
+
+    li.completed {
+      background-color: #d4edda;
+      color: #155724;
+      text-decoration: line-through;
+    }
+
+    .datetime {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .checkbox {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📋 My To-Do List</h1>
+    <input type="text" id="taskInput" placeholder="Enter your task here" />
+    <input type="datetime-local" id="datetimeInput" />
+    <button onclick="addTask()">Add Task</button>
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    function addTask() {
+      const taskInput = document.getElementById("taskInput");
+      const datetimeInput = document.getElementById("datetimeInput");
+
+      const taskText = taskInput.value.trim();
+      const datetime = datetimeInput.value;
+
+      if (taskText === '' || datetime === '') {
+        alert("Please enter both task and date/time.");
+        return;
+      }
+
+      const taskList = document.getElementById("taskList");
+
+      const li = document.createElement("li");
+      
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.className = "checkbox";
+      checkbox.addEventListener("change", function () {
+        if (this.checked) {
+          li.classList.add("completed");
+        } else {
+          li.classList.remove("completed");
+        }
+      });
+
+      const span = document.createElement("span");
+      span.innerHTML = <strong>${taskText}</strong><br><span class='datetime'>⏰ ${new Date(datetime).toLocaleString()}</span>;
+
+      li.appendChild(checkbox);
+      li.appendChild(span);
+      taskList.appendChild(li);
+
+      taskInput.value = '';
+      datetimeInput.value = '';
+    }
+  </script>
+</body>
+</html>
